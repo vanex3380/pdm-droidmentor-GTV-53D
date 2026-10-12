@@ -14,3 +14,5 @@ Trabalho Prático de PDM 2026/2027 - Aplicação DroidMentor
 * Tomás Duarte - N52971
 * Valentim Sukhar - N52678
 
+## Vídeo
+* Segunda Milestone - https://youtu.be/0MwEAqRHa4c
