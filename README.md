@@ -16,3 +16,4 @@ Trabalho Prático de PDM 2026/2027 - Aplicação DroidMentor
 
 ## Vídeo
 * Segunda Milestone - https://youtu.be/0MwEAqRHa4c
+* Terceira Milestone - https://youtu.be/2caXvRxa0kA
