@@ -11,20 +11,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pt.isel.lei.pdm.droidmentor.domain.Conversation
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ChatHistoryScreen(
+    vm: ChatHistoryViewModel,
     onNavigate: (Screen) -> Unit,
-    conversations: List<Conversation>,
-    onOpen: (Conversation) -> Unit,
+    onOpen: (String) -> Unit, // recebe o id da conversa
 ) {
+    // StateFlow -> estado do Compose (recompõe a cada mudança)
+    val conversations by vm.conversations.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,15 +42,13 @@ fun ChatHistoryScreen(
                 .height(100.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(modifier = Modifier.weight(1f).padding(top=24.dp)) {
+            Box(modifier = Modifier.weight(1f).padding(top = 24.dp)) {
                 Button(onClick = { onNavigate(Screen.TITLE) }, shape = CircleShape) {
-                    Text(text = "⬅\uFE0F",
-                        textAlign = TextAlign.Center,
-                    )
+                    Text(text = "⬅️", textAlign = TextAlign.Center)
                 }
             }
             Box(
-                modifier = Modifier.weight(6f).padding(top=24.dp),
+                modifier = Modifier.weight(6f).padding(top = 24.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(text = "Histórico", fontSize = 32.sp, fontWeight = FontWeight.Bold)
@@ -55,9 +57,12 @@ fun ChatHistoryScreen(
         }
 
         Column(modifier = Modifier.fillMaxWidth()) {
+            if (conversations.isEmpty())
+                Text(text = "Ainda não há conversas", modifier = Modifier.padding(top = 24.dp))
+
             for (conversa in conversations) {
                 Button(
-                    onClick = { onOpen(conversa) },
+                    onClick = { onOpen(conversa.id) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 12.dp),
